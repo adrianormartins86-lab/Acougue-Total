@@ -922,7 +922,23 @@ elif perfil_navegacao == "Catálogo de Produtos":
 
     df_catalogo = carregar_catalogo_acougue()
     df_editor_input = df_catalogo.drop(columns=["Descrição"], errors="ignore")
+
+    # --- AJUSTE DE TIPOS PARA EVITAR O ERRO ---
+    # Garante que as colunas de checkbox sejam estritamente booleanas
+    for loja in LOJAS:
+        if loja in df_editor_input.columns:
+            df_editor_input[loja] = df_editor_input[loja].fillna(False).astype(bool)
     
+    # Garante que o código seja inteiro
+    df_editor_input["Código"] = pd.to_numeric(df_editor_input["Código"], errors='coerce').fillna(0).astype(int)
+    
+    # Garante que as colunas de texto não tenham NaNs (o editor odeia isso)
+    cols_texto = ["Fornecedor", "Descrição Oficial", "Nome Personalizado"]
+    for col in cols_texto:
+        if col in df_editor_input.columns:
+            df_editor_input[col] = df_editor_input[col].fillna("").astype(str)
+
+   
     # -----------------------------------------------------
     # GARANTE A ORDEM DAS COLUNAS PARA O NOME PERSONALIZADO FICAR JUNTO
     ordem_colunas = ["Fornecedor", "Código", "Descrição Oficial", "Nome Personalizado"] + LOJAS
