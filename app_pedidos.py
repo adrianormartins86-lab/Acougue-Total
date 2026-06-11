@@ -157,7 +157,7 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
 
 /* REGRAS DE IMPRESSÃO ABSOLUTAS - COMPACTADAS E SEM QUEBRA DE LINHA */
 @media print {
-    @page { margin: 4mm 5mm; }
+    @page { margin: 2mm 5mm; }
     .stApp, .main, body, html {
         background-color: #ffffff !important;
         background-image: none !important;
@@ -194,7 +194,7 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
         text-align: center !important;
     }
     #print-section h3 {
-        font-size: 11px !important;
+        font-size: 10px !important;
         border-bottom: none !important;
         margin-top: 10px !important;
         margin-bottom: 3px !important;
@@ -215,7 +215,7 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
     }
     table.print-table th, table.print-table td {
         border: 1px solid #000000 !important;
-        padding: 2px 2px !important;
+        padding: 0px 2px !important;
         text-align: left;
         color: #000000 !important;
         background-color: #ffffff !important;
