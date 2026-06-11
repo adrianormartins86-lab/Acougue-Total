@@ -155,9 +155,9 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
 .topbar-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .erp-badge { background-color: #2ea043; color: white; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; margin-left: 8px;}
 
-/* REGRAS DE IMPRESSÃO ABSOLUTAS - COMPACTADAS PARA CABER EM 1 PÁGINA */
+/* REGRAS DE IMPRESSÃO ABSOLUTAS - COMPACTADAS E SEM QUEBRA DE LINHA */
 @media print {
-    @page { margin: 4mm 8mm; }
+    @page { margin: 4mm 5mm; }
     .stApp, .main, body, html {
         background-color: #ffffff !important;
         background-image: none !important;
@@ -169,64 +169,91 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
         display: none !important; 
     }
     
-    /* DESLIGA TUDO O QUE FOR DO STREAMLIT NA TELA */
     [data-testid="stElementContainer"],
     [data-testid="stHorizontalBlock"],
     div[data-testid="stVerticalBlockBorderWrapper"] {
         display: none !important;
     }
     
-    /* RELIGA APENAS A CAIXA QUE CONTÉM O PRINT-SECTION */
     [data-testid="stElementContainer"]:has(#print-section) {
         display: block !important;
         width: 100% !important;
     }
     
-    /* FORMATAÇÃO DO PAPEL */
     #print-section {
         display: block !important;
         width: 100% !important;
     }
     #print-section h2 {
-        font-size: 14px !important;
+        font-size: 13px !important;
         margin: 0 0 5px 0 !important;
         padding-bottom: 3px !important;
         border-bottom: 1px solid #000 !important;
         color: #000 !important;
         display: block !important;
+        text-align: center !important;
     }
     #print-section h3 {
-        font-size: 12px !important;
+        font-size: 11px !important;
         border-bottom: none !important;
         margin-top: 10px !important;
         margin-bottom: 3px !important;
         color: #000 !important;
     }
-    .print-container { width: 100%; display: block !important;}
+    .print-container { width: 100% !important; display: block !important;}
+    
+    /* BASE PARA TODAS AS TABELAS DE IMPRESSÃO */
     table.print-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 9.5px !important;
+        width: 100% !important;
+        border-collapse: collapse !important;
         color: #000000 !important;
-        font-family: 'IBM Plex Sans', sans-serif;
-        line-height: 1.05 !important;
+        font-family: 'IBM Plex Sans', sans-serif !important;
+        line-height: 1.1 !important;
         display: table !important;
+        table-layout: fixed !important; /* TRAVA AS LARGURAS */
         margin-bottom: 3px !important;
     }
     table.print-table th, table.print-table td {
         border: 1px solid #000000 !important;
-        padding: 1px 3px !important;
+        padding: 2px 2px !important;
         text-align: left;
         color: #000000 !important;
         background-color: #ffffff !important;
+        white-space: nowrap !important; /* 👈 SEM QUEBRA DE LINHA */
+        overflow: hidden !important;
+        text-overflow: ellipsis !important; /* 👈 ADICIONA "..." SE TEXTO CORTAR */
     }
     table.print-table th {
         background-color: #e0e0e0 !important;
-        font-weight: bold;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        font-weight: bold !important;
+        text-align: center !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     table.print-table tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+
+    /* MÁGICA ESPECÍFICA PARA A TELA DE SEPARAÇÃO (12 Colunas) */
+    table.print-sep { font-size: 8px !important; }
+    table.print-sep th:nth-child(1), table.print-sep td:nth-child(1) { width: 14% !important; } /* Fornecedor */
+    table.print-sep th:nth-child(2), table.print-sep td:nth-child(2) { width: 6% !important; text-align: center !important; } /* Cód */
+    table.print-sep th:nth-child(3), table.print-sep td:nth-child(3) { width: 28% !important; } /* Produto */
+    table.print-sep th:nth-child(n+4):nth-child(-n+11), table.print-sep td:nth-child(n+4):nth-child(-n+11) { width: 5.5% !important; text-align: center !important; } /* Lojas */
+    table.print-sep th:nth-child(12), table.print-sep td:nth-child(12) { width: 8% !important; text-align: center !important; font-weight: bold !important; background-color: #f0f0f0 !important; } /* Total */
+
+    /* MÁGICA ESPECÍFICA PARA A TELA DE VISÃO DAS LOJAS (5 Colunas) */
+    table.print-loja { font-size: 10px !important; }
+    table.print-loja th:nth-child(1), table.print-loja td:nth-child(1) { width: 15% !important; }
+    table.print-loja th:nth-child(2), table.print-loja td:nth-child(2) { width: 10% !important; text-align: center !important; }
+    table.print-loja th:nth-child(3), table.print-loja td:nth-child(3) { width: 45% !important; }
+    table.print-loja th:nth-child(4), table.print-loja td:nth-child(4) { width: 15% !important; text-align: center !important; }
+    table.print-loja th:nth-child(5), table.print-loja td:nth-child(5) { width: 15% !important; text-align: center !important; font-weight: bold !important; background-color: #f0f0f0 !important;}
+
+    /* MÁGICA ESPECÍFICA PARA A TELA DE VISÃO FORNECEDOR (11 Colunas) */
+    table.print-forn { font-size: 8.5px !important; }
+    table.print-forn th:nth-child(1), table.print-forn td:nth-child(1) { width: 8% !important; text-align: center !important; }
+    table.print-forn th:nth-child(2), table.print-forn td:nth-child(2) { width: 34% !important; }
+    table.print-forn th:nth-child(n+3):nth-child(-n+10), table.print-forn td:nth-child(n+3):nth-child(-n+10) { width: 6% !important; text-align: center !important; }
+    table.print-forn th:nth-child(11), table.print-forn td:nth-child(11) { width: 10% !important; text-align: center !important; font-weight: bold !important; background-color: #f0f0f0 !important;}
 }
 @media screen {
     #print-section { display: none !important; }
@@ -331,12 +358,10 @@ def carregar_catalogo_acougue():
         
     need_update = False
     
-    # Migração estrutural: se tiver a coluna velha 'Descrição', transforma em Oficial
     if "Descrição" in df.columns and "Descrição Oficial" not in df.columns:
         df = df.rename(columns={"Descrição": "Descrição Oficial"})
         need_update = True
         
-    # Migração estrutural: cria a coluna de apelidos caso não exista
     if "Nome Personalizado" not in df.columns:
         df["Nome Personalizado"] = ""
         df.loc[df["Código"] == 115612, "Nome Personalizado"] = "PORCO TIPO EXPORTAÇÃO"
@@ -366,7 +391,6 @@ def carregar_catalogo_acougue():
     if "Código" in df.columns:
         df["Código"] = pd.to_numeric(df["Código"], errors='coerce').fillna(0).astype(int)
         
-    # MÁGICA DOS NOMES: Cria a coluna 'Descrição' em tempo de execução para alimentar as outras telas
     def obter_nome_final(row):
         apelido = str(row.get("Nome Personalizado", "")).strip()
         if apelido and apelido.lower() != "nan":
@@ -390,7 +414,6 @@ def carregar_pedidos():
             conn.update(worksheet=WS_PEDIDOS, data=df_init)
         return df_init
 
-    # Força a sincronia dos nomes com o catálogo oficial a cada carregamento
     df_pedidos = df_pedidos.drop(columns=["Descrição", "Fornecedor"], errors="ignore")
     df_pedidos = pd.merge(df_cat[["Código", "Fornecedor", "Descrição"]], df_pedidos, on="Código", how="left")
 
@@ -408,7 +431,6 @@ def salvar_pedidos(df_to_save):
     st.cache_data.clear()
 
 def salvar_catalogo(df_to_save):
-    # Removemos a coluna dinâmica antes de salvar no banco para não sujar o Sheets
     df_clean = df_to_save.drop(columns=["Descrição"], errors="ignore")
     conn.update(worksheet=WS_PRODUTOS, data=df_clean)
     st.cache_data.clear()
@@ -585,7 +607,7 @@ if perfil_navegacao == "Separação e Fechamento":
             key=f"sep_editor_{st.session_state['reset_counter_acougue_adriano']}"
         )
 
-        html_table = df_editado.to_html(index=False, classes="print-table")
+        html_table = df_editado.to_html(index=False, classes=["print-table", "print-sep"])
         st.markdown(f"""<div id="print-section">
 <h2 style="color: black; margin-bottom: 10px; text-align: center; border-bottom: 2px solid black; padding-bottom: 5px;">
     Resumo de Separação — Açougue Final Adriano
@@ -673,7 +695,6 @@ elif perfil_navegacao == "Visão das Lojas":
     df_loja_view[loja_selecionada] = df_loja_view[loja_selecionada].fillna(0).astype(int)
     df_loja_view = df_loja_view.rename(columns={loja_selecionada: "Qtde"})
 
-    # --- INÍCIO DA CONEXÃO COM O BANCO DE DADOS POSTGRESQL ---
     try:
         conn_pg = st.connection("banco_erp", type="sql")
         
@@ -713,7 +734,6 @@ elif perfil_navegacao == "Visão das Lojas":
     df_loja_view["Estoque"] = df_loja_view["Estoque"].fillna(0).astype(int)
     df_loja_view["Qtde"] = df_loja_view["Qtde"].fillna(0).astype(int)
     df_loja_view = df_loja_view[["Fornecedor", "Código", "Descrição", "Estoque", "Qtde"]]
-    # --- FIM DA CONEXÃO COM O BANCO DE DADOS POSTGRESQL ---
 
     with st.container(border=True):
         st.info("💡 **Dica:** O **Estoque** foi preenchido automaticamente com base no sistema ERP. Você pode preencher apenas a **Qtde** do pedido.")
@@ -736,10 +756,9 @@ elif perfil_navegacao == "Visão das Lojas":
                 key=f"loja_acougue_adriano_{st.session_state['reset_counter_acougue_adriano']}"
             )
 
-        # ── HTML INVISÍVEL PARA IMPRESSÃO DA LOJA ─────────────────────
         df_imprimir = df_editado.copy()
         df_imprimir = df_imprimir.rename(columns={"Estoque": "Est.", "Qtde": "Ped."})
-        html_table_loja = df_imprimir.to_html(index=False, classes="print-table")
+        html_table_loja = df_imprimir.to_html(index=False, classes=["print-table", "print-loja"])
         
         st.markdown(f"""<div id="print-section">
 <h2 style="color: black; margin-bottom: 10px; text-align: center; border-bottom: 2px solid black; padding-bottom: 5px;">
@@ -749,7 +768,6 @@ elif perfil_navegacao == "Visão das Lojas":
 {html_table_loja}
 </div>
 </div>""", unsafe_allow_html=True)
-        # ──────────────────────────────────────────────────────────────
 
         itens_com_pedido = int((df_editado["Qtde"] > 0).sum())
         total_itens      = len(df_editado)
@@ -866,7 +884,7 @@ elif perfil_navegacao == "Visão por Fornecedor (Resumo)":
                         </div>
                     """, unsafe_allow_html=True)
                     
-                    html_table = df_forn_edit.to_html(index=False, classes="print-table")
+                    html_table = df_forn_edit.to_html(index=False, classes=["print-table", "print-forn"])
                     html_print_content += f"<h3 style='color: black; margin-top: 10px; margin-bottom: 4px;'>🍖 {fornecedor}</h3>\n"
                     html_print_content += f"{html_table}\n"
                     html_print_content += f"<div style='text-align:right; font-weight:bold; font-size:11px; margin-top:3px; margin-bottom: 8px; color: black;'>Total do Fornecedor: {total_geral} unidades</div>\n"
@@ -904,12 +922,12 @@ elif perfil_navegacao == "Catálogo de Produtos":
 
     df_catalogo = carregar_catalogo_acougue()
     df_editor_input = df_catalogo.drop(columns=["Descrição"], errors="ignore")
-
-    # 👇 --- ADICIONE ESTAS DUAS LINHAS AQUI --- 👇
-    # Isso força o DataFrame a organizar as colunas exatamente nessa sequência antes de mostrar na tela
+    
+    # -----------------------------------------------------
+    # GARANTE A ORDEM DAS COLUNAS PARA O NOME PERSONALIZADO FICAR JUNTO
     ordem_colunas = ["Fornecedor", "Código", "Descrição Oficial", "Nome Personalizado"] + LOJAS
     df_editor_input = df_editor_input[ordem_colunas]
-    # 👆 --------------------------------------- 👆
+    # -----------------------------------------------------
     
     with st.container(border=True):
         
