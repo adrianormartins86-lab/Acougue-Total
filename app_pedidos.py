@@ -153,6 +153,7 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
 .topbar-left { display: flex; align-items: center; gap: 12px; }
 .topbar-title { font-size: 18px; font-weight: 700; color: var(--text-header); }
 .topbar-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.erp-badge { background-color: #2ea043; color: white; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; margin-left: 8px;}
 
 /* REGRAS DE IMPRESSÃO ABSOLUTAS - COMPACTADAS PARA CABER EM 1 PÁGINA */
 @media print {
@@ -554,7 +555,7 @@ elif perfil_navegacao == "Visão das Lojas":
             <div class="topbar-left">
                 <span style="font-size:22px">🍖</span>
                 <div>
-                    <div class="topbar-title">{loja_selecionada} — Açougue Final Adriano</div>
+                    <div class="topbar-title">{loja_selecionada} — Açougue Final Adriano <span class="erp-badge">🟢 Conectado ao ERP</span></div>
                     <div class="topbar-sub">Preencha a quantidade de cada produto</div>
                 </div>
             </div>
@@ -583,13 +584,48 @@ elif perfil_navegacao == "Visão das Lojas":
     df_loja_view[loja_selecionada] = df_loja_view[loja_selecionada].fillna(0).astype(int)
     df_loja_view = df_loja_view.rename(columns={loja_selecionada: "Qtde"})
 
+    # --- INÍCIO DA CONEXÃO COM O BANCO DE DADOS POSTGRESQL ---
+    try:
+        conn_pg = st.connection("banco_erp", type="sql")
+        # Substitua NOME_DA_SUA_TABELA_AQUI pela sua tabela ou view real do PostgreSQL
+        query_erp = f"SELECT cadprodemp.cade_codempresa,
+    cadprodemp.cade_codigo,
+    cadprod.cadp_descricao,
+    cadprodemp.cade_estoque1::numeric(18,2) AS estoque,
+    cadprodemp.cade_estoque6::numeric(18,2) AS estoqueemb
+   FROM cadprodemp
+     JOIN cadprod ON cadprodemp.cade_codigo = cadprod.cadp_codigo
+     FULL JOIN mvad ON cadprodemp.cade_codmva::text = mvad.mvad_codmva::text
+  WHERE cadprodemp.cade_ativo::text = 'S'::text AND cadprodemp.cade_codempresa::text <= '031'::text
+  ORDER BY cadprodemp.cade_codempresa, cadprodemp.cade_codigo"
+        df_erp = conn_pg.query(query_erp, ttl=300) # Atualiza o estoque de 5 em 5 minutos
+        
+        if not df_erp.empty:
+            df_erp = df_erp.rename(columns={"id_produto": "Código", "estoque": "Estoque"})
+            df_loja_view = pd.merge(df_loja_view, df_erp[["Código", "Estoque"]], on="Código", how="left")
+        else:
+            df_loja_view["Estoque"] = 0
+            
+    except Exception as e:
+        # Se der algum erro (ex: banco caiu), não quebra a tela do gerente, apenas zera
+        st.error(f"⚠️ Erro ao puxar dados do ERP PostgreSQL: {e}")
+        df_loja_view["Estoque"] = 0
+
+    # Tratamento de segurança para deixar a coluna bonita como inteiro
+    df_loja_view["Estoque"] = df_loja_view["Estoque"].fillna(0).astype(int)
+    
+    # Reordenando para o Estoque ficar antes do Pedido (Qtde)
+    df_loja_view = df_loja_view[["Fornecedor", "Código", "Descrição", "Estoque", "Qtde"]]
+    # --- FIM DA CONEXÃO COM O BANCO DE DADOS POSTGRESQL ---
+
     with st.container(border=True):
-        st.info("💡 Preencha a *Qtde* desejada para cada produto. Apenas os itens atrelados a esta loja são exibidos.")
+        st.info("💡 **Dica:** O **Estoque** foi preenchido automaticamente com base no sistema ERP. Você pode preencher apenas a **Qtde** do pedido.")
 
         col_cfg_loja = {
             "Fornecedor": st.column_config.TextColumn("Fornecedor", width=150, disabled=True),
             "Código":     st.column_config.NumberColumn("Cód.", width=80, format="%d", disabled=True),
             "Descrição":  st.column_config.TextColumn("Produto", width=250, disabled=True),
+            "Estoque":    st.column_config.NumberColumn("📦 Estoque", width=100, format="%d", disabled=True),
             "Qtde":       st.column_config.NumberColumn("🛒 Qtde", width=120, min_value=0, step=1),
         }
 
@@ -604,7 +640,12 @@ elif perfil_navegacao == "Visão das Lojas":
             )
 
         # ── HTML INVISÍVEL PARA IMPRESSÃO DA LOJA ─────────────────────
-        html_table_loja = df_editado.to_html(index=False, classes="print-table")
+        # Retiramos a coluna Estoque se quiser imprimir apenas o pedido, 
+        # mas como adicionei o Estoque, vamos exibi-lo na impressão também!
+        df_imprimir = df_editado.copy()
+        df_imprimir = df_imprimir.rename(columns={"Estoque": "Est.", "Qtde": "Ped."})
+        html_table_loja = df_imprimir.to_html(index=False, classes="print-table")
+        
         st.markdown(f"""<div id="print-section">
 <h2 style="color: black; margin-bottom: 10px; text-align: center; border-bottom: 2px solid black; padding-bottom: 5px;">
     Resumo do Pedido — {loja_selecionada}
