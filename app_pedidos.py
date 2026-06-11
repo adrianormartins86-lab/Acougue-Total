@@ -587,21 +587,33 @@ elif perfil_navegacao == "Visão das Lojas":
     # --- INÍCIO DA CONEXÃO COM O BANCO DE DADOS POSTGRESQL ---
     try:
         conn_pg = st.connection("banco_erp", type="sql")
-        # Substitua NOME_DA_SUA_TABELA_AQUI pela sua tabela ou view real do PostgreSQL
-        query_erp = f"SELECT cadprodemp.cade_codempresa,
-    cadprodemp.cade_codigo,
-    cadprod.cadp_descricao,
-    cadprodemp.cade_estoque1::numeric(18,2) AS estoque,
-    cadprodemp.cade_estoque6::numeric(18,2) AS estoqueemb
-   FROM cadprodemp
-     JOIN cadprod ON cadprodemp.cade_codigo = cadprod.cadp_codigo
-     FULL JOIN mvad ON cadprodemp.cade_codmva::text = mvad.mvad_codmva::text
-  WHERE cadprodemp.cade_ativo::text = 'S'::text AND cadprodemp.cade_codempresa::text <= '031'::text
-  ORDER BY cadprodemp.cade_codempresa, cadprodemp.cade_codigo"
+        
+        # Mapeando "Loja 01" para "001", "Loja 02" para "002" como é no seu banco
+        mapa_banco_erp = {
+            "Loja 01": "001", "Loja 02": "002", "Loja 03": "003", 
+            "Loja 04": "004", "Loja 05": "005", "Loja 06": "006", 
+            "Loja 07": "007", "Loja 08": "008"
+        }
+        cod_empresa_banco = mapa_banco_erp.get(loja_selecionada, "001")
+        
+        query_erp = f"""
+            SELECT cadprodemp.cade_codempresa,
+                   cadprodemp.cade_codigo,
+                   cadprod.cadp_descricao,
+                   cadprodemp.cade_estoque1::numeric(18,2) AS estoque,
+                   cadprodemp.cade_estoque6::numeric(18,2) AS estoqueemb
+            FROM cadprodemp
+            JOIN cadprod ON cadprodemp.cade_codigo = cadprod.cadp_codigo
+            FULL JOIN mvad ON cadprodemp.cade_codmva::text = mvad.mvad_codmva::text
+            WHERE cadprodemp.cade_ativo::text = 'S'::text 
+              AND cadprodemp.cade_codempresa::text = '{cod_empresa_banco}'
+            ORDER BY cadprodemp.cade_codempresa, cadprodemp.cade_codigo
+        """
+        
         df_erp = conn_pg.query(query_erp, ttl=300) # Atualiza o estoque de 5 em 5 minutos
         
         if not df_erp.empty:
-            df_erp = df_erp.rename(columns={"id_produto": "Código", "estoque": "Estoque"})
+            df_erp = df_erp.rename(columns={"cade_codigo": "Código", "estoque": "Estoque"})
             df_loja_view = pd.merge(df_loja_view, df_erp[["Código", "Estoque"]], on="Código", how="left")
         else:
             df_loja_view["Estoque"] = 0
@@ -613,6 +625,7 @@ elif perfil_navegacao == "Visão das Lojas":
 
     # Tratamento de segurança para deixar a coluna bonita como inteiro
     df_loja_view["Estoque"] = df_loja_view["Estoque"].fillna(0).astype(int)
+    df_loja_view["Qtde"] = df_loja_view["Qtde"].fillna(0).astype(int)
     
     # Reordenando para o Estoque ficar antes do Pedido (Qtde)
     df_loja_view = df_loja_view[["Fornecedor", "Código", "Descrição", "Estoque", "Qtde"]]
@@ -640,8 +653,6 @@ elif perfil_navegacao == "Visão das Lojas":
             )
 
         # ── HTML INVISÍVEL PARA IMPRESSÃO DA LOJA ─────────────────────
-        # Retiramos a coluna Estoque se quiser imprimir apenas o pedido, 
-        # mas como adicionei o Estoque, vamos exibi-lo na impressão também!
         df_imprimir = df_editado.copy()
         df_imprimir = df_imprimir.rename(columns={"Estoque": "Est.", "Qtde": "Ped."})
         html_table_loja = df_imprimir.to_html(index=False, classes="print-table")
