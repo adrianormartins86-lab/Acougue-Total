@@ -240,7 +240,76 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
 LOJAS = ["Loja 01", "Loja 02", "Loja 03", "Loja 04", "Loja 05", "Loja 06", "Loja 07", "Loja 08"]
 MAPA_LOJAS = {l: l for l in LOJAS}
 
-produtos_iniciais = [{"Fornecedor": "BOVINOS", "Código": 128537, "Descrição": "Bisteca Bov Kg S/File Congelada"}, {"Fornecedor": "BOVINOS", "Código": 280989, "Descrição": "Contra File Bov Kg Agra Promoção"}, {"Fornecedor": "BOVINOS", "Código": 115454, "Descrição": "Costela Minga Bov Kg Cong"}, {"Fornecedor": "BOVINOS", "Código": 130815, "Descrição": "Coxao Mole Bov Kg Agra Promoção"}, {"Fornecedor": "BOVINOS", "Código": 14717, "Descrição": "Mocoto Bov Kg Bdj"}, {"Fornecedor": "LINGUIÇAS", "Código": 7696, "Descrição": "Ling Tosc Kg Frimesa"}, {"Fornecedor": "LINGUIÇAS", "Código": 214463, "Descrição": "Ling Suina Kg Sadia"}, {"Fornecedor": "LINGUIÇAS", "Código": 344755, "Descrição": "Ling Pernil Kg Frimesa"}, {"Fornecedor": "LINGUIÇAS", "Código": 377869, "Descrição": "Ling Suina Kg Seara"}, {"Fornecedor": "LINGUIÇAS", "Código": 609449, "Descrição": "Ling Suina 1kg Mimosa"}, {"Fornecedor": "LINGUIÇAS", "Código": 611718, "Descrição": "Ling Frango 700g Lar Cong"}, {"Fornecedor": "LINGUIÇAS", "Código": 624314, "Descrição": "Ling Churrasco Kg Alegra"}, {"Fornecedor": "LINGUIÇAS", "Código": 641551, "Descrição": "Ling Frango 700g Copacol Fina Cong"}, {"Fornecedor": "COCAMAR", "Código": 352505, "Descrição": "Ancho Bov Kg Cocamar"}, {"Fornecedor": "COCAMAR", "Código": 597588, "Descrição": "Aranha Bov Kg Cocamar"}, {"Fornecedor": "COCAMAR", "Código": 597612, "Descrição": "Bananinha Bov Kg Cocamar"}, {"Fornecedor": "COCAMAR", "Código": 597597, "Descrição": "Contra File Bov Kg Cocamar"}, {"Fornecedor": "COCAMAR", "Código": 440457, "Descrição": "Cupim Bov Kg Cocamar"}, {"Fornecedor": "COCAMAR", "Código": 181156, "Descrição": "Fraldinha Bov Kg Cocamar"}, {"Fornecedor": "COCAMAR", "Código": 597630, "Descrição": "Picanha Bov Fatiada kg Cocamar"}, {"Fornecedor": "SUINO", "Código": 115612, "Descrição": "PORCO TIPO EXPOTAÇÃO"}, {"Fornecedor": "SUINO", "Código": 35170, "Descrição": "Bisteca Suina Kg Copa Congelado"}, {"Fornecedor": "SUINO", "Código": 7483, "Descrição": "Bisteca Suina Kg Lombo Congelado"}, {"Fornecedor": "SUINO", "Código": 7492, "Descrição": "Costela Suina Kg S/ Couro Band"}, {"Fornecedor": "SUINO", "Código": 16544, "Descrição": "Paleta Suina Kg C/Couro"}, {"Fornecedor": "SUINO", "Código": 16926, "Descrição": "Panceta Suina Kg"}, {"Fornecedor": "SUINO", "Código": 14960, "Descrição": "Pernil Suino Kg C/Couro"}, {"Fornecedor": "SUINO", "Código": 7517, "Descrição": "Toucinho Suino Kg"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 318273, "Descrição": "File Sassami 1kg Copacol Cong"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 341776, "Descrição": "File Sassami 800g Copacol \"1a1\""}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 341785, "Descrição": "Coxa Sobr Passarinho 800g Copacol \"1a1\""}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 415071, "Descrição": "File Sassami 1kg Nat Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 415080, "Descrição": "Coxinha Asa 1kg Nat"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 420338, "Descrição": "File Coxa Sobrecoxa 1kg Nat Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 420347, "Descrição": "Meio Asa 1kg Nat Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 421373, "Descrição": "Coxinha Asa 1kg Seara Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 455389, "Descrição": "Moela Frango 1kg Perdigao Cong"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 475967, "Descrição": "Coxinha Asa 1kg Cancao Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 491664, "Descrição": "File Sassami 750g Pioneiro Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 492450, "Descrição": "Sobrecoxa 1kg Seara Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 493644, "Descrição": "File Peito 800g Copacol Bifes Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 544823, "Descrição": "File Coxa Sobr 800g Copacol S/Pele Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 567374, "Descrição": "Figado Frango 500g Levo Bdj Cong"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 587703, "Descrição": "Moela Frango 700g Lar Cong"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 587712, "Descrição": "Figado Frango 700g Lar Cong"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 595872, "Descrição": "File Sassami 1kg Seara Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 597296, "Descrição": "Frango Passarinho 700g Lar Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 608699, "Descrição": "Sobrecoxa 1kg Nat Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 614061, "Descrição": "File Peito 1kg Nat Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 640279, "Descrição": "Coracao Frango 500g Nat Cong Band"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 647485, "Descrição": "Meio Asa Temp 500g Copacol Mestre Cong"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 650197, "Descrição": "Coxinha Asa 750g Pioneiro Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 657260, "Descrição": "File Sassami 1kg Cancao Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 657288, "Descrição": "Meio Asa 800g Cancao Iqf"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 662688, "Descrição": "Meio Asa 1kg Jagua"}, {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 662721, "Descrição": "Meio Asa 750g Pioneiro Iqf"}, {"Fornecedor": "DIVERSOS", "Código": 109824, "Descrição": "Coxa Sobrecoxa Kg"}, {"Fornecedor": "DIVERSOS", "Código": 7553, "Descrição": "Coxa Sobrecoxa Kg Copacol"}, {"Fornecedor": "DIVERSOS", "Código": 111582, "Descrição": "Coxa Sobrecoxa Kg Dorsal"}, {"Fornecedor": "DIVERSOS", "Código": 140982, "Descrição": "Dorso Kg"}, {"Fornecedor": "DIVERSOS", "Código": 109833, "Descrição": "File Peito Kg"}, {"Fornecedor": "DIVERSOS", "Código": 46015, "Descrição": "File Peito Kg Copacol"}, {"Fornecedor": "DIVERSOS", "Código": 99547, "Descrição": "Frango Caipira Kg Nho Bento"}, {"Fornecedor": "DIVERSOS", "Código": 359100, "Descrição": "Frango Kg S/Miudos Pioneiro"}, {"Fornecedor": "DIVERSOS", "Código": 79761, "Descrição": "Frango Kg"}, {"Fornecedor": "DIVERSOS", "Código": 527048, "Descrição": "Frango Kg Seara"}, {"Fornecedor": "DIVERSOS", "Código": 7562, "Descrição": "Peito Frango Kg Copacol"}, {"Fornecedor": "DIVERSOS", "Código": 139773, "Descrição": "Pe Frango Kg Bdj"}]
+produtos_iniciais = [
+    {"Fornecedor": "BOVINOS", "Código": 128537, "Descrição Oficial": "Bisteca Bov Kg S/File Congelada", "Nome Personalizado": ""},
+    {"Fornecedor": "BOVINOS", "Código": 280989, "Descrição Oficial": "Contra File Bov Kg Agra Promoção", "Nome Personalizado": ""},
+    {"Fornecedor": "BOVINOS", "Código": 115454, "Descrição Oficial": "Costela Minga Bov Kg Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "BOVINOS", "Código": 130815, "Descrição Oficial": "Coxao Mole Bov Kg Agra Promoção", "Nome Personalizado": ""},
+    {"Fornecedor": "BOVINOS", "Código": 14717, "Descrição Oficial": "Mocoto Bov Kg Bdj", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 7696, "Descrição Oficial": "Ling Tosc Kg Frimesa", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 214463, "Descrição Oficial": "Ling Suina Kg Sadia", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 344755, "Descrição Oficial": "Ling Pernil Kg Frimesa", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 377869, "Descrição Oficial": "Ling Suina Kg Seara", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 609449, "Descrição Oficial": "Ling Suina 1kg Mimosa", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 611718, "Descrição Oficial": "Ling Frango 700g Lar Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 624314, "Descrição Oficial": "Ling Churrasco Kg Alegra", "Nome Personalizado": ""},
+    {"Fornecedor": "LINGUIÇAS", "Código": 641551, "Descrição Oficial": "Ling Frango 700g Copacol Fina Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 352505, "Descrição Oficial": "Ancho Bov Kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 597588, "Descrição Oficial": "Aranha Bov Kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 597612, "Descrição Oficial": "Bananinha Bov Kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 597597, "Descrição Oficial": "Contra File Bov Kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 440457, "Descrição Oficial": "Cupim Bov Kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 181156, "Descrição Oficial": "Fraldinha Bov Kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "COCAMAR", "Código": 597630, "Descrição Oficial": "Picanha Bov Fatiada kg Cocamar", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 115612, "Descrição Oficial": "PORCO TIPO EXPOTAÇÃO", "Nome Personalizado": "PORCO TIPO EXPORTAÇÃO"},
+    {"Fornecedor": "SUINO", "Código": 35170, "Descrição Oficial": "Bisteca Suina Kg Copa Congelado", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 7483, "Descrição Oficial": "Bisteca Suina Kg Lombo Congelado", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 7492, "Descrição Oficial": "Costela Suina Kg S/ Couro Band", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 16544, "Descrição Oficial": "Paleta Suina Kg C/Couro", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 16926, "Descrição Oficial": "Panceta Suina Kg", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 14960, "Descrição Oficial": "Pernil Suino Kg C/Couro", "Nome Personalizado": ""},
+    {"Fornecedor": "SUINO", "Código": 7517, "Descrição Oficial": "Toucinho Suino Kg", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 318273, "Descrição Oficial": "File Sassami 1kg Copacol Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 341776, "Descrição Oficial": "File Sassami 800g Copacol \"1a1\"", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 341785, "Descrição Oficial": "Coxa Sobr Passarinho 800g Copacol \"1a1\"", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 415071, "Descrição Oficial": "File Sassami 1kg Nat Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 415080, "Descrição Oficial": "Coxinha Asa 1kg Nat", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 420338, "Descrição Oficial": "File Coxa Sobrecoxa 1kg Nat Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 420347, "Descrição Oficial": "Meio Asa 1kg Nat Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 421373, "Descrição Oficial": "Coxinha Asa 1kg Seara Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 455389, "Descrição Oficial": "Moela Frango 1kg Perdigao Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 475967, "Descrição Oficial": "Coxinha Asa 1kg Cancao Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 491664, "Descrição Oficial": "File Sassami 750g Pioneiro Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 492450, "Descrição Oficial": "Sobrecoxa 1kg Seara Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 493644, "Descrição Oficial": "File Peito 800g Copacol Bifes Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 544823, "Descrição Oficial": "File Coxa Sobr 800g Copacol S/Pele Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 567374, "Descrição Oficial": "Figado Frango 500g Levo Bdj Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 587703, "Descrição Oficial": "Moela Frango 700g Lar Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 587712, "Descrição Oficial": "Figado Frango 700g Lar Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 595872, "Descrição Oficial": "File Sassami 1kg Seara Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 597296, "Descrição Oficial": "Frango Passarinho 700g Lar Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 608699, "Descrição Oficial": "Sobrecoxa 1kg Nat Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 614061, "Descrição Oficial": "File Peito 1kg Nat Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 640279, "Descrição Oficial": "Coracao Frango 500g Nat Cong Band", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 647485, "Descrição Oficial": "Meio Asa Temp 500g Copacol Mestre Cong", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 650197, "Descrição Oficial": "Coxinha Asa 750g Pioneiro Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 657260, "Descrição Oficial": "File Sassami 1kg Cancao Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 657288, "Descrição Oficial": "Meio Asa 800g Cancao Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 662688, "Descrição Oficial": "Meio Asa 1kg Jagua", "Nome Personalizado": ""},
+    {"Fornecedor": "CONGELADOS - PADRÃO E IQF", "Código": 662721, "Descrição Oficial": "Meio Asa 750g Pioneiro Iqf", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 109824, "Descrição Oficial": "Coxa Sobrecoxa Kg", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 7553, "Descrição Oficial": "Coxa Sobrecoxa Kg Copacol", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 111582, "Descrição Oficial": "Coxa Sobrecoxa Kg Dorsal", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 140982, "Descrição Oficial": "Dorso Kg", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 109833, "Descrição Oficial": "File Peito Kg", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 46015, "Descrição Oficial": "File Peito Kg Copacol", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 99547, "Descrição Oficial": "Frango Caipira Kg Nho Bento", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 359100, "Descrição Oficial": "Frango Kg S/Miudos Pioneiro", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 79761, "Descrição Oficial": "Frango Kg", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 527048, "Descrição Oficial": "Frango Kg Seara", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 7562, "Descrição Oficial": "Peito Frango Kg Copacol", "Nome Personalizado": ""},
+    {"Fornecedor": "DIVERSOS", "Código": 139773, "Descrição Oficial": "Pe Frango Kg Bdj", "Nome Personalizado": ""}
+]
 
 # ─────────────────────────────────────────────
 # CONEXÃO GOOGLE SHEETS & FUNÇÕES DE DADOS
@@ -258,7 +327,23 @@ def carregar_catalogo_acougue():
         df_init = pd.DataFrame(produtos_iniciais)
         for loja in LOJAS: df_init[loja] = True
         conn.update(worksheet=WS_PRODUTOS, data=df_init)
-        return df_init
+        df = df_init.copy()
+        
+    need_update = False
+    
+    # Migração estrutural: se tiver a coluna velha 'Descrição', transforma em Oficial
+    if "Descrição" in df.columns and "Descrição Oficial" not in df.columns:
+        df = df.rename(columns={"Descrição": "Descrição Oficial"})
+        need_update = True
+        
+    # Migração estrutural: cria a coluna de apelidos caso não exista
+    if "Nome Personalizado" not in df.columns:
+        df["Nome Personalizado"] = ""
+        df.loc[df["Código"] == 115612, "Nome Personalizado"] = "PORCO TIPO EXPORTAÇÃO"
+        need_update = True
+        
+    if need_update:
+        conn.update(worksheet=WS_PRODUTOS, data=df.drop(columns=["Descrição"], errors="ignore"))
     
     novas_colunas = {}
     for col in df.columns:
@@ -273,15 +358,22 @@ def carregar_catalogo_acougue():
             df[loja] = False
         else:
             def parse_bool(x):
-                if isinstance(x, bool):
-                    return x
-                if isinstance(x, (int, float)):
-                    return bool(x) and not pd.isna(x)
+                if isinstance(x, bool): return x
+                if isinstance(x, (int, float)): return bool(x) and not pd.isna(x)
                 return str(x).strip().upper() in ['TRUE', 'VERDADEIRO', '1', 'V', 'SIM', 'YES', 'T', 'X']
             df[loja] = df[loja].apply(parse_bool)
 
     if "Código" in df.columns:
         df["Código"] = pd.to_numeric(df["Código"], errors='coerce').fillna(0).astype(int)
+        
+    # MÁGICA DOS NOMES: Cria a coluna 'Descrição' em tempo de execução para alimentar as outras telas
+    def obter_nome_final(row):
+        apelido = str(row.get("Nome Personalizado", "")).strip()
+        if apelido and apelido.lower() != "nan":
+            return apelido
+        return str(row.get("Descrição Oficial", "")).strip()
+        
+    df["Descrição"] = df.apply(obter_nome_final, axis=1)
             
     return df
 
@@ -290,22 +382,17 @@ def carregar_pedidos():
     df_pedidos = conn.read(worksheet=WS_PEDIDOS, ttl=0)
     df_cat = carregar_catalogo_acougue()
     
-    if not df_pedidos.empty:
-        novas_colunas_ped = {}
-        for col in df_pedidos.columns:
-            col_str = str(col).strip()
-            for loja in LOJAS:
-                if loja.lower() in col_str.lower():
-                    novas_colunas_ped[col] = loja
-        df_pedidos = df_pedidos.rename(columns=novas_colunas_ped)
-    
-    if df_pedidos.empty or "Fornecedor" not in df_pedidos.columns:
+    if df_pedidos.empty or "Código" not in df_pedidos.columns:
         df_init = df_cat[["Fornecedor", "Código", "Descrição"]].copy()
         for loja in LOJAS:
             df_init[loja] = 0
         if not df_init.empty:
             conn.update(worksheet=WS_PEDIDOS, data=df_init)
         return df_init
+
+    # Força a sincronia dos nomes com o catálogo oficial a cada carregamento
+    df_pedidos = df_pedidos.drop(columns=["Descrição", "Fornecedor"], errors="ignore")
+    df_pedidos = pd.merge(df_cat[["Código", "Fornecedor", "Descrição"]], df_pedidos, on="Código", how="left")
 
     if "Código" in df_pedidos.columns:
         df_pedidos["Código"] = pd.to_numeric(df_pedidos["Código"], errors='coerce').fillna(0).astype(int)
@@ -321,7 +408,9 @@ def salvar_pedidos(df_to_save):
     st.cache_data.clear()
 
 def salvar_catalogo(df_to_save):
-    conn.update(worksheet=WS_PRODUTOS, data=df_to_save)
+    # Removemos a coluna dinâmica antes de salvar no banco para não sujar o Sheets
+    df_clean = df_to_save.drop(columns=["Descrição"], errors="ignore")
+    conn.update(worksheet=WS_PRODUTOS, data=df_clean)
     st.cache_data.clear()
 
 # ─────────────────────────────────────────────
@@ -577,8 +666,8 @@ elif perfil_navegacao == "Visão das Lojas":
     df_all = carregar_pedidos()
     df_loja_view = pd.merge(
         df_cat_loja[["Fornecedor", "Código", "Descrição"]],
-        df_all[["Fornecedor", "Código", "Descrição", loja_selecionada]],
-        on=["Fornecedor", "Código", "Descrição"],
+        df_all[["Fornecedor", "Código", loja_selecionada]],
+        on=["Fornecedor", "Código"],
         how="left"
     )
     df_loja_view[loja_selecionada] = df_loja_view[loja_selecionada].fillna(0).astype(int)
@@ -588,7 +677,6 @@ elif perfil_navegacao == "Visão das Lojas":
     try:
         conn_pg = st.connection("banco_erp", type="sql")
         
-        # Mapeando "Loja 01" para "001", "Loja 02" para "002" como é no seu banco
         mapa_banco_erp = {
             "Loja 01": "001", "Loja 02": "002", "Loja 03": "003", 
             "Loja 04": "004", "Loja 05": "005", "Loja 06": "006", 
@@ -610,7 +698,7 @@ elif perfil_navegacao == "Visão das Lojas":
             ORDER BY cadprodemp.cade_codempresa, cadprodemp.cade_codigo
         """
         
-        df_erp = conn_pg.query(query_erp, ttl=300) # Atualiza o estoque de 5 em 5 minutos
+        df_erp = conn_pg.query(query_erp, ttl=300)
         
         if not df_erp.empty:
             df_erp = df_erp.rename(columns={"cade_codigo": "Código", "estoque": "Estoque"})
@@ -619,15 +707,11 @@ elif perfil_navegacao == "Visão das Lojas":
             df_loja_view["Estoque"] = 0
             
     except Exception as e:
-        # Se der algum erro (ex: banco caiu), não quebra a tela do gerente, apenas zera
         st.error(f"⚠️ Erro ao puxar dados do ERP PostgreSQL: {e}")
         df_loja_view["Estoque"] = 0
 
-    # Tratamento de segurança para deixar a coluna bonita como inteiro
     df_loja_view["Estoque"] = df_loja_view["Estoque"].fillna(0).astype(int)
     df_loja_view["Qtde"] = df_loja_view["Qtde"].fillna(0).astype(int)
-    
-    # Reordenando para o Estoque ficar antes do Pedido (Qtde)
     df_loja_view = df_loja_view[["Fornecedor", "Código", "Descrição", "Estoque", "Qtde"]]
     # --- FIM DA CONEXÃO COM O BANCO DE DADOS POSTGRESQL ---
 
@@ -727,17 +811,13 @@ elif perfil_navegacao == "Visão por Fornecedor (Resumo)":
 
     nomes_forn = df_cat["Fornecedor"].dropna().unique().tolist()
     
-    # Variável para acumular o HTML de todas as tabelas para impressão
     html_print_content = ""
 
     for i in range(0, len(nomes_forn), 1):
         cols = st.columns(1, gap="small")
         for j, fornecedor in enumerate(nomes_forn[i:i+1]):
 
-            # Carrega a base geral para o Fornecedor atual
             df_forn = df_all[df_all["Fornecedor"] == fornecedor].copy()
-            
-            # Forçamos mostrar sempre as colunas
             colunas_presentes = LOJAS
             df_forn = df_forn[["Código", "Descrição"] + colunas_presentes].copy()
             df_forn["TOTAL"] = df_forn[colunas_presentes].sum(axis=1)
@@ -786,7 +866,6 @@ elif perfil_navegacao == "Visão por Fornecedor (Resumo)":
                         </div>
                     """, unsafe_allow_html=True)
                     
-                    # Acumulando HTML para a página de impressão SEM ESPAÇOS INICIAIS
                     html_table = df_forn_edit.to_html(index=False, classes="print-table")
                     html_print_content += f"<h3 style='color: black; margin-top: 10px; margin-bottom: 4px;'>🍖 {fornecedor}</h3>\n"
                     html_print_content += f"{html_table}\n"
@@ -794,7 +873,6 @@ elif perfil_navegacao == "Visão por Fornecedor (Resumo)":
 
         st.write("<br>", unsafe_allow_html=True)
 
-    # ── HTML INVISÍVEL PARA IMPRESSÃO DO RESUMO ───────────────────
     st.markdown(f"""<div id="print-section">
 <h2 style="color: black; margin-bottom: 10px; text-align: center; border-bottom: 2px solid black; padding-bottom: 5px;">
     Visão por Fornecedor (Resumo) — Açougue Final Adriano
@@ -803,7 +881,6 @@ elif perfil_navegacao == "Visão por Fornecedor (Resumo)":
 {html_print_content}
 </div>
 </div>""", unsafe_allow_html=True)
-    # ──────────────────────────────────────────────────────────────
     
     st.divider()
     _, col_print = st.columns([8, 2])
@@ -819,28 +896,30 @@ elif perfil_navegacao == "Catálogo de Produtos":
     <div class="page-header hide-print" style="background: linear-gradient(90deg, var(--red-dark) 0%, #1a0808 100%); padding: 14px 20px; border-radius: 10px; margin-bottom: 22px;">
         <span style="font-size: 26px; margin-right: 12px;">🗂️</span>
         <div style="display: inline-block; vertical-align: top;">
-            <div style="font-size: 20px; font-weight: 700; color: var(--text-header);">Catálogo de Peças</div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Gerencie itens e controle a visibilidade por loja através das caixas de seleção</div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--text-header);">Catálogo de Peças e Nomes Oficiais</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Atualize nomes direto do ERP ou crie apelidos personalizados. Os apelidos terão prioridade em todo o sistema.</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
     df_catalogo = carregar_catalogo_acougue()
+    df_editor_input = df_catalogo.drop(columns=["Descrição"], errors="ignore")
     
     with st.container(border=True):
         
         opcoes_forn = ["BOVINOS", "LINGUIÇAS", "COCAMAR", "SUINO", "CONGELADOS - PADRÃO E IQF", "DIVERSOS"]
         
         col_cfg_cat = {
-            "Fornecedor": st.column_config.SelectboxColumn("Fornecedor", options=opcoes_forn, width=150, required=True),
-            "Código":     st.column_config.NumberColumn("Cód.", width=80, format="%d", required=True),
-            "Descrição":  st.column_config.TextColumn("Descrição do Item", width=350, required=True),
+            "Fornecedor":         st.column_config.SelectboxColumn("Fornecedor", options=opcoes_forn, width=150, required=True),
+            "Código":             st.column_config.NumberColumn("Cód.", width=80, format="%d", required=True),
+            "Descrição Oficial":  st.column_config.TextColumn("Nome Oficial (ERP)", width=280, disabled=False),
+            "Nome Personalizado": st.column_config.TextColumn("Nome Personalizado (Apelido)", width=230),
         }
         for loja in LOJAS:
             col_cfg_cat[loja] = st.column_config.CheckboxColumn(loja, default=False)
             
         edited_cat = st.data_editor(
-            df_catalogo,
+            df_editor_input,
             use_container_width=True,
             hide_index=True,
             height=600,
@@ -850,8 +929,35 @@ elif perfil_navegacao == "Catálogo de Produtos":
         )
         
         st.divider()
-        if st.button("💾 Salvar Catálogo no Google Sheets", type="primary", use_container_width=True):
-            salvar_catalogo(edited_cat)
-            st.session_state['reset_counter_acougue_adriano'] += 1
-            st.success("✅ Catálogo atualizado com sucesso! As alterações já refletem na visão das lojas.")
-            st.rerun()
+        col_atualizar, col_sync, _ = st.columns([2.5, 3, 3])
+        
+        with col_atualizar:
+            if st.button("💾 Salvar Catálogo", type="primary", use_container_width=True):
+                salvar_catalogo(edited_cat)
+                st.session_state['reset_counter_acougue_adriano'] += 1
+                st.success("✅ Catálogo atualizado com sucesso!")
+                st.rerun()
+                
+        with col_sync:
+            if st.button("📥 Puxar Nomes do ERP", use_container_width=True):
+                try:
+                    conn_pg = st.connection("banco_erp", type="sql")
+                    cods = tuple(edited_cat["Código"].tolist())
+                    
+                    if len(cods) == 1:
+                        cods_str = f"({cods[0]})"
+                    else:
+                        cods_str = str(cods)
+                        
+                    query_nomes = f"SELECT cadp_codigo, cadp_descricao FROM cadprod WHERE cadp_codigo IN {cods_str}"
+                    df_nomes = conn_pg.query(query_nomes, ttl=0)
+                    
+                    for _, row in df_nomes.iterrows():
+                        mask = edited_cat["Código"] == row["cadp_codigo"]
+                        edited_cat.loc[mask, "Descrição Oficial"] = row["cadp_descricao"]
+                        
+                    salvar_catalogo(edited_cat)
+                    st.success("✅ Nomes Oficiais sincronizados com sucesso!")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"⚠️ Erro ao buscar nomes no banco ERP: {e}")
