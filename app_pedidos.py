@@ -904,6 +904,12 @@ elif perfil_navegacao == "Catálogo de Produtos":
 
     df_catalogo = carregar_catalogo_acougue()
     df_editor_input = df_catalogo.drop(columns=["Descrição"], errors="ignore")
+
+    # 👇 --- ADICIONE ESTAS DUAS LINHAS AQUI --- 👇
+    # Isso força o DataFrame a organizar as colunas exatamente nessa sequência antes de mostrar na tela
+    ordem_colunas = ["Fornecedor", "Código", "Descrição Oficial", "Nome Personalizado"] + LOJAS
+    df_editor_input = df_editor_input[ordem_colunas]
+    # 👆 --------------------------------------- 👆
     
     with st.container(border=True):
         
