@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import io
+import requests
 import streamlit.components.v1 as components
 from streamlit_gsheets import GSheetsConnection
 
@@ -346,6 +347,34 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 WS_PRODUTOS = "Acougue_Produtos"
 WS_PEDIDOS  = "Acougue_Pecas"
 
+def parse_bool(x):
+    if isinstance(x, bool): return x
+    if isinstance(x, (int, float)): return bool(x) and not pd.isna(x)
+    return str(x).strip().upper() in ['TRUE', 'VERDADEIRO', '1', 'V', 'SIM', 'YES', 'T', 'X']
+
+# FUNÇÃO PARA ENVIAR MENSAGEM PELO TELEGRAM (COM DEBUG)
+def notificar_telegram(mensagem):
+    try:
+        bot_token = st.secrets["telegram"]["bot_token"]
+        chat_id = st.secrets["telegram"]["chat_id"]
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        payload = {"chat_id": chat_id, "text": mensagem}
+        
+        resposta = requests.post(url, json=payload)
+        
+        if resposta.status_code == 200:
+            return True
+        else:
+            st.error(f"🚨 Erro do Telegram: {resposta.text}")
+            return False
+            
+    except KeyError:
+        st.error("⚠️ Credenciais do Telegram não configuradas no secrets.toml.")
+        return False
+    except Exception as e:
+        st.error(f"⚠️ Erro de conexão ao enviar o Telegram: {e}")
+        return False
+
 @st.cache_data(ttl=15)
 def carregar_catalogo_acougue():
     df = conn.read(worksheet=WS_PRODUTOS, ttl=0, usecols=list(range(20)))
@@ -382,10 +411,6 @@ def carregar_catalogo_acougue():
         if loja not in df.columns:
             df[loja] = False
         else:
-            def parse_bool(x):
-                if isinstance(x, bool): return x
-                if isinstance(x, (int, float)): return bool(x) and not pd.isna(x)
-                return str(x).strip().upper() in ['TRUE', 'VERDADEIRO', '1', 'V', 'SIM', 'YES', 'T', 'X']
             df[loja] = df[loja].apply(parse_bool)
 
     if "Código" in df.columns:
@@ -775,7 +800,7 @@ elif perfil_navegacao == "Visão das Lojas":
         pct              = round(itens_com_pedido / total_itens * 100) if total_itens else 0
 
         st.divider()
-        m1, m2, m3, col_print, col_btn = st.columns([2.5, 2.2, 1.8, 1.5, 3])
+        m1, m2, m3, col_print, col_aviso, col_btn = st.columns([1.5, 1.5, 1.5, 1.3, 2.4, 2.8])
         with m1: st.metric("Itens preenchidos", f"{itens_com_pedido} / {total_itens}")
         with m2: st.metric("Total de unidades", total_unidades)
         with m3: st.metric("Cobertura", f"{pct}%")
@@ -784,6 +809,23 @@ elif perfil_navegacao == "Visão das Lojas":
             st.write("<br>", unsafe_allow_html=True)
             if st.button("🖨️ Imprimir", use_container_width=True):
                 components.html("<script>window.parent.print();</script>", height=0)
+
+        with col_aviso:
+            st.write("<br>", unsafe_allow_html=True)
+            if st.button("🚫 Sem Pedido Hoje", use_container_width=True):
+                # Zera a loja atual na base de dados
+                df_main = carregar_pedidos()
+                df_main[loja_selecionada] = 0
+                salvar_pedidos(df_main)
+                
+                # Envia o aviso via Telegram
+                msg_aviso = f"🚨 *AVISO - Açougue Final*\nA {loja_selecionada} informou que *NÃO* fará pedido de peças nesta semana."
+                enviado = notificar_telegram(msg_aviso)
+                
+                if enviado:
+                    st.success("✅ Supervisor avisado e pedido zerado!")
+                else:
+                    st.warning("⚠️ O pedido foi zerado, mas falhou ao enviar o Telegram (verifique as credenciais no Secrets).")
 
         with col_btn:
             st.write("<br>", unsafe_allow_html=True)
@@ -938,7 +980,7 @@ elif perfil_navegacao == "Catálogo de Produtos":
         if col in df_editor_input.columns:
             df_editor_input[col] = df_editor_input[col].fillna("").astype(str)
 
-   
+    
     # -----------------------------------------------------
     # GARANTE A ORDEM DAS COLUNAS PARA O NOME PERSONALIZADO FICAR JUNTO
     ordem_colunas = ["Fornecedor", "Código", "Descrição Oficial", "Nome Personalizado"] + LOJAS
