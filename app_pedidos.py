@@ -4,6 +4,7 @@ import io
 import requests
 import streamlit.components.v1 as components
 from streamlit_gsheets import GSheetsConnection
+from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 
 # ─────────────────────────────────────────────
 # CONFIGURAÇÃO DA PÁGINA
@@ -340,6 +341,56 @@ produtos_iniciais = [
 ]
 
 # ─────────────────────────────────────────────
+# FUNÇÃO DE ESTILIZAÇÃO DE EXCEL COM CORES (NOVA)
+# ─────────────────────────────────────────────
+def gerar_excel_estilizado(df, sheet_name="Resumo"):
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name=sheet_name)
+        worksheet = writer.sheets[sheet_name]
+
+        # Estilos com as cores do App
+        header_fill = PatternFill(start_color='6B1D1D', end_color='6B1D1D', fill_type='solid') # Vermelho Escuro
+        alt_row_fill = PatternFill(start_color='F9F2F2', end_color='F9F2F2', fill_type='solid') # Fundo alternado
+        header_font = Font(color='FFFFFF', bold=True)
+        border_style = Border(
+            left=Side(style='thin', color='CCCCCC'),
+            right=Side(style='thin', color='CCCCCC'),
+            top=Side(style='thin', color='CCCCCC'),
+            bottom=Side(style='thin', color='CCCCCC')
+        )
+
+        for row_idx, row in enumerate(worksheet.iter_rows(min_row=1, max_row=worksheet.max_row, min_col=1, max_col=worksheet.max_column)):
+            for cell in row:
+                cell.border = border_style
+                if row_idx == 0:
+                    # Formata o Cabeçalho
+                    cell.fill = header_fill
+                    cell.font = header_font
+                    cell.alignment = Alignment(horizontal='center', vertical='center')
+                else:
+                    # Fundo alternado para as linhas
+                    if row_idx % 2 == 0:
+                        cell.fill = alt_row_fill
+                    # Alinhamento (Deixa a descrição à esquerda, e os números centralizados)
+                    if cell.column_letter not in ['C']: 
+                        cell.alignment = Alignment(horizontal='center', vertical='center')
+
+        # Autoajuste de largura das colunas
+        for col in worksheet.columns:
+            max_length = 0
+            col_letter = col[0].column_letter
+            for cell in col:
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[col_letter].width = max_length + 2
+
+    return buffer.getvalue()
+
+# ─────────────────────────────────────────────
 # CONEXÃO GOOGLE SHEETS & FUNÇÕES DE DADOS
 # ─────────────────────────────────────────────
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -658,11 +709,9 @@ if perfil_navegacao == "Separação e Fechamento":
             st.download_button("⬇️ CSV", data=csv, file_name="separacao_acougue_adriano.csv", mime="text/csv", use_container_width=True)
 
         with col_excel:
-            buffer = io.BytesIO()
-            with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-                df_exp = df_editado.copy().rename(columns=MAPA_LOJAS)
-                df_exp.to_excel(writer, index=False, sheet_name='Pedidos Acougue Adriano')
-            st.download_button("⬇️ Excel", data=buffer.getvalue(), file_name="separacao_acougue_adriano.xlsx",
+            df_exp = df_editado.copy().rename(columns=MAPA_LOJAS)
+            excel_data = gerar_excel_estilizado(df_exp, "Separação Acougue")
+            st.download_button("⬇️ Excel", data=excel_data, file_name="separacao_acougue_adriano.xlsx",
                                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                                use_container_width=True)
                                
@@ -671,7 +720,7 @@ if perfil_navegacao == "Separação e Fechamento":
                 components.html("<script>window.parent.print();</script>", height=0)
 
         with col_zerar:
-            if st.button("🚨 Zerar Todos os Pedidos", use_container_width=True):
+            if st.button("🚨 Zerar Todos os Pedidos", use_container_width=True, key="btn_zerar_sep"):
                 modal_zerar_pedidos()
 
 # ─────────────────────────────────────────────
@@ -943,10 +992,32 @@ elif perfil_navegacao == "Visão por Fornecedor (Resumo)":
 </div>""", unsafe_allow_html=True)
     
     st.divider()
-    _, col_print = st.columns([8, 2])
+
+    # --- NOVOS BOTÕES ADICIONADOS NA TELA DE VISÃO POR FORNECEDOR ---
+    col_csv, col_excel, col_print, col_zerar = st.columns([1.5, 1.5, 2, 2.5])
+
+    # Montando a base unificada e consolidada para extração (com todas as lojas e cálculo do TOTAL)
+    df_export_forn = df_all[["Fornecedor", "Código", "Descrição"] + LOJAS].copy()
+    df_export_forn["TOTAL"] = df_export_forn[LOJAS].sum(axis=1)
+    df_export_forn = df_export_forn.rename(columns=MAPA_LOJAS)
+
+    with col_csv:
+        csv_data = df_export_forn.to_csv(index=False).encode("utf-8")
+        st.download_button("⬇️ CSV", data=csv_data, file_name="visao_fornecedores.csv", mime="text/csv", use_container_width=True)
+
+    with col_excel:
+        excel_data = gerar_excel_estilizado(df_export_forn, "Visão Fornecedores")
+        st.download_button("⬇️ Excel", data=excel_data, file_name="visao_fornecedores.xlsx",
+                           mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                           use_container_width=True)
+
     with col_print:
         if st.button("🖨️ Imprimir Resumo Geral", use_container_width=True):
             components.html("<script>window.parent.print();</script>", height=0)
+
+    with col_zerar:
+        if st.button("🚨 Zerar Todos os Pedidos", use_container_width=True, key="btn_zerar_forn"):
+            modal_zerar_pedidos()
 
 # ─────────────────────────────────────────────
 # ROTA 4 — CATÁLOGO DE PRODUTOS
