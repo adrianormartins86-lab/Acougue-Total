@@ -388,6 +388,23 @@ def gerar_excel_estilizado(df, sheet_name="Resumo"):
                     pass
             worksheet.column_dimensions[col_letter].width = max_length + 2
 
+        # 🖨️ CONFIGURAÇÃO AUTOMÁTICA DE IMPRESSÃO
+        # Ativa o ajuste de página
+        worksheet.sheet_properties.pageSetUpPr.fitToPage = True
+        
+        # Força caber em 1 página de largura e "infinitas" de altura
+        worksheet.page_setup.fitToWidth = 1
+        worksheet.page_setup.fitToHeight = False
+        
+        # Coloca em modo Paisagem (Landscape) para caberem todas as lojas melhor
+        worksheet.page_setup.orientation = worksheet.ORIENTATION_LANDSCAPE
+        
+        # Define as margens como estreitas
+        worksheet.page_margins.left = 0.25
+        worksheet.page_margins.right = 0.25
+        worksheet.page_margins.top = 0.75
+        worksheet.page_margins.bottom = 0.75
+
     return buffer.getvalue()
 
 # ─────────────────────────────────────────────
